@@ -36,3 +36,33 @@ jobs:
         assert """${{steps.object.outputs.hello}}""" == "world"
         assert """${{steps.object.outputs.should_be_null}}""" == "null"
         assert json.loads("""${{steps.object.outputs.nested_object}}""") == {"foo": "bar"}
+    - uses: ./
+      id: object2
+      with:
+        json: |
+          {
+            "hello": "world",
+            "should_be_null": null,
+            "nested_object": {"foo": "bar"}
+          }
+        raw-strings: 'false'
+    - shell: python
+      run: |
+        import json
+        assert """[${{steps.object2.outputs.hello}}]""" == "[\"world\"]"
+        assert """${{steps.object2.outputs.should_be_null}}""" == "null"
+        assert json.loads("""${{steps.object2.outputs.nested_object}}""") == {"foo": "bar"}
+    - uses: ./
+      id: object3
+      with:
+        json: |
+          {
+            "hello": "world",
+            "should_be_null": null,
+            "nested_object": {"foo": "bar"}
+          }
+        key: nested_object
+    - shell: python
+      run: |
+        import json
+        assert """${{steps.object3.outputs.foo}}""" == "bar"

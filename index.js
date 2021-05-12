@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 
-function parseBool(val) {
-  if (!val) return null;
+function parseBool(val, def) {
+  if (!val) return def;
   if (["true", "True", "TRUE", "t"].includes(val)) return true;
   if (["false", "False", "FALSE", "f"].includes(val)) return false;
   throw new TypeError(`Expecting boolean string, got '${val}'`);
@@ -14,9 +14,11 @@ function isString(val) {
 try {
   const jsonstr = core.getInput('json', {required: true});
   var data = JSON.parse(jsonstr);
-  const raw_strings = parseBool(core.getInput('raw-strings', {required: false})) || true;
+  const raw_strings_str = core.getInput('raw-strings', {required: false});
+  const raw_strings = parseBool(raw_strings_str, true);
+  console.log(`raw_strings: ${raw_strings} (from: '${raw_strings_str}')`);
   const key = core.getInput('key', {required: false});
-  const silent = parseBool(core.getInput('silent', {required: false})) || false;
+  const silent = parseBool(core.getInput('silent', {required: false}), false);
 
   if (key) data = data[key];
   if (data === undefined) {

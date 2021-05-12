@@ -1,0 +1,38 @@
+name: "units-test"
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+jobs:
+  # unit tests
+  units:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm ci
+    - run: npm test
+
+  # test action works running from the graph
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      id: object
+      with:
+        json: |
+          {
+            "hello": "world",
+            "should_be_null": null,
+            "nested_object": {"foo": "bar"}
+          }
+    - shell: python
+      run: |
+        import json
+        assert """${{steps.object.outputs.hello}}""" == "world"
+        assert """${{steps.object.outputs.should_be_null}}""" == "null"
+        assert json.loads("""${{steps.object.outputs.nested_object}}""") == {"foo": "bar"}

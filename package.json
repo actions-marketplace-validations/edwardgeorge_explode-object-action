@@ -1,0 +1,23 @@
+{
+  "name": "explode-object",
+  "version": "1.0.0",
+  "description": "Explode a json object into an output for each key",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:edwardgeorge/explode-object-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edwardgeorge/explode-object-action/issues"
+  },
+  "homepage": "https://github.com/edwardgeorge/explode-object-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.7"
+  }
+}

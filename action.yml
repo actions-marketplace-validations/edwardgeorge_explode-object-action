@@ -1,0 +1,16 @@
+name: 'Explode Object'
+description: 'Explode a JSON input object, setting an output for each key.'
+inputs:
+  json:
+    required: true
+    description: "json object"
+  raw-strings:
+    required: false
+    default: 'true'
+    description: "Output string values as plain strings (do not JSON encode)"
+  key:
+    required: false
+    description: "Optional key to access before exploding."
+runs:
+  using: 'node12'
+  main: 'index.js'

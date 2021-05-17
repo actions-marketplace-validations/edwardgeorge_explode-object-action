@@ -26,7 +26,7 @@ try {
       console.log("data is undefined");
       data = {};
     } else {
-      throw new Error(`key '${key}' not found in object`); 
+      throw new Error(`key '${key}' not found in object`);
     }
   }
   for (const [key, value] of Object.entries(data)) {
